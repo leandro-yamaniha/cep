@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -28,7 +30,7 @@ import com.yamaniha.cep.exception.CepNotFoundException;
 import com.yamaniha.cep.service.CepService;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("testing CepController...")
+@DisplayName("testing CepController with mockito ...")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CepControllerTest {
 
@@ -60,20 +62,20 @@ class CepControllerTest {
 		Assertions.assertNotNull(controller);
 		
 	}
-	
+		
 	@Test()
-	@Order(1)
+	@Order(2)
 	@DisplayName("call endpoint expect ok")
 	void ok() throws Exception {
 		
-		String cep = "14403500";
+		String id = "14403500";
 		
 		var dtoMock = buildCepDto();
 		
 		doReturn(dtoMock)
 			.when(service).findCep(Mockito.anyString());
 				
-		mockMvc.perform(get(ENDPOINT_GET.replace("{cep}", cep))
+		mockMvc.perform(get(ENDPOINT_GET.replace("{id}", id))
 				.contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -89,16 +91,16 @@ class CepControllerTest {
 	
 
 	@Test()
-	@Order(2)
+	@Order(3)
 	@DisplayName("call endpoint expect not found")
 	void notFound() throws Exception {
 		
-		String cep = "012";
+		String id = "12345678";
 				
-		doThrow(new CepNotFoundException(cep))
+		doThrow(new CepNotFoundException(id))
 			.when(service).findCep(Mockito.anyString());
 				
-		mockMvc.perform(get(ENDPOINT_GET.replace("{cep}", cep))
+		mockMvc.perform(get(ENDPOINT_GET.replace("{id}", id))
 				.contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isNotFound())
@@ -107,23 +109,23 @@ class CepControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("bairro").doesNotExist())
 				.andExpect(MockMvcResultMatchers.jsonPath("cidade").doesNotExist())
 				.andExpect(MockMvcResultMatchers.jsonPath("estado").doesNotExist())
-				.andExpect(MockMvcResultMatchers.jsonPath("erro").value("cep " + cep + " not found"))
+				.andExpect(MockMvcResultMatchers.jsonPath("erro").value("cep " + id + " not found"))
 				;
 		
 	}
 	
 	@Test()
-	@Order(3)
+	@Order(4)
 	@DisplayName("call endpoint expect internal server error")
 	void internalServerError() throws Exception {
 		
-		String cep = "x";
+		String id = "14403500";
 		
 		String message = "test exception";
 		doThrow(new RuntimeException(message))
 			.when(service).findCep(Mockito.anyString());
 				
-		mockMvc.perform(get(ENDPOINT_GET.replace("{cep}", cep))
+		mockMvc.perform(get(ENDPOINT_GET.replace("{id}", id))
 				.contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isInternalServerError())

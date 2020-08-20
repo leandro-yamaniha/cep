@@ -1,5 +1,7 @@
 package com.yamaniha.cep.api.advice;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,7 +26,14 @@ public class ApiControllerAdvice {
 		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex);
 		
 	}
-
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<ErrorDto> handleConstraintViolationException(ConstraintViolationException ex) {
+		
+		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex);
+		
+	}
+	
 
 	private ResponseEntity<ErrorDto> buildResponseEntity(HttpStatus httpStatus, RuntimeException ex) {
 		return ResponseEntity
