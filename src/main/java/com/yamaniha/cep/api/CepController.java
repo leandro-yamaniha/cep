@@ -11,13 +11,16 @@ import com.yamaniha.cep.dto.CepDto;
 import com.yamaniha.cep.service.CepService;
 
 @RestController
-@RequestMapping("/v1/cep")
+@RequestMapping(CepController.BASE_ENDPOINT)
 public class CepController {
+		
+	public static final String BASE_ENDPOINT = "/v1/cep";
+	public static final String GET_ENDPOINT = "/{cep}";
 	
 	@Autowired
 	private CepService service;
 	
-	@GetMapping("/{cep}")
+	@GetMapping(GET_ENDPOINT)
 	public ResponseEntity<CepDto> getCep(@PathVariable("cep") String cep) {
 		
 		return ResponseEntity.ok(service.findCep(cep));

@@ -11,7 +11,13 @@ public class CepServiceImpl implements CepService {
 	@Override
 	public CepDto findCep(String cep) {
 
-		return new CepDto();
+		return CepDto.builder()
+				.cep("")
+				.rua("")
+				.bairro("")
+				.cidade("")
+				.estado("")
+				.build();
 		
 	}
 
