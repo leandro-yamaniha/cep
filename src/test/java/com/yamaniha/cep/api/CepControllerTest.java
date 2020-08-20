@@ -22,7 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import com.yamaniha.cep.api.advice.ApiControllerAdvice;
 import com.yamaniha.cep.dto.CepDto;
 import com.yamaniha.cep.exception.CepNotFoundException;
