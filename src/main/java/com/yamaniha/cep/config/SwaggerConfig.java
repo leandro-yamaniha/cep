@@ -16,6 +16,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
@@ -40,6 +41,7 @@ public class SwaggerConfig {
 	public Docket postsApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.groupName("com.yamaniha.cep")
+				.securitySchemes(Arrays.asList(apiKey()))
 				.securityContexts(Collections.singletonList(securityContext()))
 				.apiInfo(apiInfo()).select().paths(regex("/.*"))
 				.apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
@@ -51,6 +53,10 @@ public class SwaggerConfig {
 		return new ApiInfoBuilder().title(appName)
 				.description(description)
 				.version(version).build();
+	}
+	
+	private ApiKey apiKey() {
+		return new ApiKey("Bearer", "Authorization", "header");
 	}
 	
 	private SecurityContext securityContext() {
