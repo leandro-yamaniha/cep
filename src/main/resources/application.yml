@@ -9,7 +9,6 @@ spring:
 
 security:
   jwt:
-    uri: "/**"
     header: ${JWT_HEADER:Authorization}
     prefix: ${JWT_PREFIX:Bearer}
     secret: ${JWT_SECRET:10E9F239E3523081B76C3B71E26BF1C29D8D6E5DC11583A0BBA534BF8CBC338A}

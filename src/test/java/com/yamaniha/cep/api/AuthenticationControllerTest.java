@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties= {"security.jwt.prefix=Bearer","security.jwt.secret=test"})
+@DisplayName("testing token authentication.. ")
 class AuthenticationControllerTest {
 	
 	private final String ENDPOINT_GET = CepController.BASE_ENDPOINT
@@ -38,6 +40,7 @@ class AuthenticationControllerTest {
     }
 	
 	@Test
+	@DisplayName("unauthorized access without header")
 	void isUnauthorized() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON))				
@@ -45,9 +48,41 @@ class AuthenticationControllerTest {
 					.andExpect(status().isUnauthorized());
 	}
 	
+	 @Test
+	 @DisplayName("unauthorized access when invalid header")
+	 void invalidHeader() throws Exception {
+		 mockMvc.perform(get(ENDPOINT_GET)
+					.contentType(MediaType.APPLICATION_JSON)
+					.header("Authorization", "test"))
+					.andDo(print())
+					.andExpect(status().isUnauthorized());
+	 }
+	
+	 
+	 @Test
+	 @DisplayName("unauthorized access when invalid token")
+	 void invalidToken() throws Exception {
+		 mockMvc.perform(get(ENDPOINT_GET)
+					.contentType(MediaType.APPLICATION_JSON)
+					.header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjZXAtbWFuYWdlciIsIm5hbWUiOiJsZWFuZHJvIiwiaWF0IjoxNjAxMjU5MDAwfQ.ItrgBVjFVOruze1KrsqXpP2dTWeqCW_sntui4SDXHGE"))
+					.andDo(print())
+					.andExpect(status().isUnauthorized());
+	 }
+	 
+	 @WithMockUser("admin")
+	 @Test
+	 @DisplayName("unauthorized access when invalid username")
+	 void invalidUsername() throws Exception {
+		 mockMvc.perform(get(ENDPOINT_GET)
+					.contentType(MediaType.APPLICATION_JSON)
+					.header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsIm5hbWUiOiJsZWFuZHJvIiwiaWF0IjoxNjAxMjU5MDAwfQ.l8jioyej-gViKmVCHy75trYoC3ZBJlt2AdKMfZqdJkw"))
+					.andDo(print())
+					.andExpect(status().isUnauthorized());
+	 }
 	
 	 @WithMockUser("admin")
-	 @Test	 
+	 @Test
+	 @DisplayName("authorized access")
 	 void isOk() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -55,5 +90,8 @@ class AuthenticationControllerTest {
 					.andDo(print())
 					.andExpect(status().isOk());
 	 }
+	 	 
+
+	 
 	
 }
