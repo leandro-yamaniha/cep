@@ -23,11 +23,16 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.exceptionHandling().authenticationEntryPoint(new DefaultAuthenticationEntryPoint()).and()
-		.authorizeRequests().antMatchers( "/swagger-resources/**", "/v2/api-docs/**", "/csrf/**",
-				"/webjars/**", "/swagger-ui.html")
-		.permitAll().anyRequest().authenticated();
+		http.csrf().disable()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			.exceptionHandling().authenticationEntryPoint(new DefaultAuthenticationEntryPoint()).and()
+			.authorizeRequests().antMatchers( "/swagger-resources/**", "/v2/api-docs/**", "/csrf/**",
+				"/webjars/**", "/swagger-ui.html", "/h2-console/**","/actuator/health","/actuator/info")
+			.permitAll().anyRequest().authenticated();
+		
+		http.headers().frameOptions().disable();
+		
 		http.addFilter(new JwtTokenAuthenticationFilter(authenticationManager(), jwtConfig));
 
 	}

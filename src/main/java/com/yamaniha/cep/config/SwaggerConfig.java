@@ -9,8 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.google.common.base.Predicates;
+import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -44,7 +43,7 @@ public class SwaggerConfig {
 				.securitySchemes(Arrays.asList(apiKey()))
 				.securityContexts(Collections.singletonList(securityContext()))
 				.apiInfo(apiInfo()).select().paths(regex("/.*"))
-				.apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
+				.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 				.paths(PathSelectors.any())				
 				.build();
 	}
