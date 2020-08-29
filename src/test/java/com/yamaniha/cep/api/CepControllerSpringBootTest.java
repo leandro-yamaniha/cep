@@ -17,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -34,12 +35,12 @@ class CepControllerSpringBootTest {
 	
 	private MockMvc mockMvc;
 	
+	@Autowired
 	private CepController controller;	
 	
 	@BeforeEach
 	void setup() {
-
-		controller= new CepController(null);
+		
 		mockMvc = MockMvcBuilders.standaloneSetup(controller)
 				.setControllerAdvice(new ApiControllerAdvice())
 				.build();
