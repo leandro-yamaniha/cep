@@ -15,34 +15,34 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.yamaniha.cep.api.advice.ApiControllerAdvice;
+import com.yamaniha.cep.integration.annotation.IntegrationTest;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 @DisplayName("testing CepController with spring ...")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@IntegrationTest
 class CepControllerSpringBootTest {
 
-	private final String ENDPOINT_GET = CepController.BASE_ENDPOINT.concat(CepController.GET_ENDPOINT);
+	private final static String ENDPOINT_GET = CepController.BASE_ENDPOINT.concat(CepController.GET_ENDPOINT);
 	
 	private MockMvc mockMvc;
-		
-	@Autowired
-	private CepController controller;
+	
+	private CepController controller;	
 	
 	@BeforeEach
 	void setup() {
-		
+
+		controller= new CepController(null);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller)
-				.setControllerAdvice(new ApiControllerAdvice()).build();
+				.setControllerAdvice(new ApiControllerAdvice())
+				.build();
 		
 	}
 	

@@ -22,14 +22,17 @@ import org.springframework.web.context.WebApplicationContext;
 @DisplayName("testing token authentication.. ")
 class AuthenticationControllerTest {
 	
-	private final String ENDPOINT_GET = CepController.BASE_ENDPOINT
+	private final static String ENDPOINT_GET = CepController.BASE_ENDPOINT
 											.concat(CepController.GET_ENDPOINT)
 											.replace("{id}", "14403500");
-	
-	@Autowired
+		
 	private WebApplicationContext context;
 	
 	private MockMvc mockMvc;
+	
+	AuthenticationControllerTest(WebApplicationContext context){
+		this.context = context;
+	}
 	
 	@BeforeEach
     void setup() {

@@ -7,51 +7,61 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.yamaniha.cep.config.JwtConfig;
+import com.yamaniha.cep.properties.JwtProperties;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 public class JwtTokenAuthenticationFilter extends BasicAuthenticationFilter {
 
-	private final JwtConfig jwtConfig;
+	private final JwtProperties jwtConfig;
 
-	public JwtTokenAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
+	public JwtTokenAuthenticationFilter(final AuthenticationManager authenticationManager, 
+										final JwtProperties jwtConfig) {
 		super(authenticationManager);
 		this.jwtConfig = jwtConfig;
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	protected void doFilterInternal(final HttpServletRequest request, 
+									final HttpServletResponse response, 
+									final FilterChain chain)
 			throws ServletException, IOException {
 
-		String header = request.getHeader(jwtConfig.getHeader());
+		final String header = request.getHeader(jwtConfig.getHeader());
 
 		if (header != null && header.startsWith(jwtConfig.getPrefix())) {
-			String token = header.replace(jwtConfig.getPrefix(), "");
+			final String token = header.replace(jwtConfig.getPrefix(), "");
 
 			try {
-				Claims claims = Jwts.parser().setSigningKey(jwtConfig.getSecret().getBytes()).parseClaimsJws(token)
-						.getBody();
+				final Claims claims = Jwts.parser()
+										.setSigningKey(
+											jwtConfig.getSecret()
+												.getBytes())
+										.parseClaimsJws(token)
+										.getBody();
 
-				String username = claims.getSubject();
+				final String username = claims.getSubject();
 				if (username.equals("cep-manager")) {
-					UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null,
-							Arrays.asList(new SimpleGrantedAuthority("admin")));
+					final UsernamePasswordAuthenticationToken auth = 
+							new UsernamePasswordAuthenticationToken(
+								username, null,
+								Arrays.asList(
+									new SimpleGrantedAuthority("admin")));
 
 					SecurityContextHolder.getContext().setAuthentication(auth);
-				}
-				else {
+				} else {
 					SecurityContextHolder.clearContext();
 				}
 
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				SecurityContextHolder.clearContext();
 			}
 		}

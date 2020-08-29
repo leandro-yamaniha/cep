@@ -14,28 +14,27 @@ import com.yamaniha.cep.exception.CepNotFoundException;
 public class ApiControllerAdvice {
 	
 	@ExceptionHandler(CepNotFoundException.class)
-	public ResponseEntity<ErrorDto> handleCepNotFoundException(CepNotFoundException ex){
+	public ResponseEntity<ErrorDto> handleCepNotFoundException(final CepNotFoundException ex) {
 
 		return buildResponseEntity(HttpStatus.NOT_FOUND, ex);
 		
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ErrorDto> handleRuntimeException(RuntimeException ex){
+	public ResponseEntity<ErrorDto> handleRuntimeException(final RuntimeException ex) {
 		
 		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex);
 		
 	}
 	
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<ErrorDto> handleConstraintViolationException(ConstraintViolationException ex) {
+	public ResponseEntity<ErrorDto> handleConstraintViolationException(final ConstraintViolationException ex) {
 		
 		return buildResponseEntity(HttpStatus.BAD_REQUEST, ex);
 		
 	}
 	
-
-	private ResponseEntity<ErrorDto> buildResponseEntity(HttpStatus httpStatus, RuntimeException ex) {
+	private ResponseEntity<ErrorDto> buildResponseEntity(final HttpStatus httpStatus, final RuntimeException ex) {
 		return ResponseEntity
 				.status(httpStatus)
 				.body(new ErrorDto(ex.getMessage()));

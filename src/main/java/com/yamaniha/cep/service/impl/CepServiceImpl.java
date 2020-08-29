@@ -9,7 +9,7 @@ import com.yamaniha.cep.service.CepService;
 public class CepServiceImpl implements CepService {
 
 	@Override
-	public CepDto findCep(String cep) {
+	public CepDto findCep(final String cep) {
 
 		return CepDto.builder()
 				.cep("")

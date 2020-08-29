@@ -18,6 +18,7 @@
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
 		<jacoco.version>0.8.4</jacoco.version>
+		<checkstyle-maven-plugin.version>3.1.1</checkstyle-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -92,9 +93,21 @@
 			<scope>test</scope>
 		</dependency>		
 		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit</artifactId>
+			<version>0.14.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>		
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -163,7 +176,40 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-maven-plugin.version}</version>
+				<configuration>
+					<failOnViolation>true</failOnViolation>
+					<violationSeverity>warning</violationSeverity>
+					<logViolationsToConsole>true</logViolationsToConsole>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-maven-plugin.version}</version>
+				<configuration>
+					<violationSeverity>warning</violationSeverity>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	
 </project>
