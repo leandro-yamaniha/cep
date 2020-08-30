@@ -23,6 +23,8 @@ spring:
       minimum-idle: ${minimum-idle:5}
       idle-timeout: ${idle-timeout:10000}
       connectionTimeout: ${idle-timeout:10000}  
+  boot.admin:
+    client.url: http://localhost:8081        
   
 security:
   jwt:
