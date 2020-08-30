@@ -90,7 +90,7 @@ class AuthenticationControllerTest {
 					.contentType(MediaType.APPLICATION_JSON)
 					.header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjZXAtbWFuYWdlciIsIm5hbWUiOiJsZWFuZHJvIiwiaWF0IjoxNjAxMjU5MDAwfQ.fb3cm1mfceZV5RCpx1MQm-TiGhDgEEujt_xwx8iLMzY"))
 					.andDo(print())
-					.andExpect(status().isOk());
+					.andExpect(status().isNotFound());
 	 }
 	 	 
 
