@@ -139,6 +139,11 @@
 			<optional>true</optional>
 		</dependency>
 		
+		<dependency>
+		    <groupId>de.codecentric</groupId>
+		    <artifactId>spring-boot-admin-starter-client</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
