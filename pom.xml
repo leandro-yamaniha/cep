@@ -19,6 +19,11 @@
 		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
 		<jacoco.version>0.8.4</jacoco.version>
 		<checkstyle-maven-plugin.version>3.1.1</checkstyle-maven-plugin.version>
+		<sonar.coverage.exclusions>
+			**/*CepApplication.*,
+			**/utils/**,
+			**/filter/**
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -144,6 +149,8 @@
 					<mainclass>com.yamaniha.CepApplication</mainclass>		
 					<excludes>
 						<exclude>**/*CepApplication.*</exclude>
+						<exclude>**/util/**</exclude>
+						<exclude>**/filter/**</exclude>
 					</excludes>
 					
 				</configuration>
