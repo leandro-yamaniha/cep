@@ -1,0 +1,16 @@
+version: '3.2'
+
+services:
+  db: 
+    image: mysql:latest
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password']
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=cep
+      - MYSQL_USER=usr-api
+      - MYSQL_PASSWORD=test-cep

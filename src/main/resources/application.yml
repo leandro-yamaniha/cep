@@ -1,25 +1,28 @@
 server:
-  port: 9000
+  port: 9100
   servlet:
     contextPath: /cep/ 
+  tomcat.threads.max: 250    
 spring:
   application:
     name: Cep-Api  
   profiles:
-    active: challenge    
-  h2.console.enabled: true
+    active: mysql
   jpa:
-    open-in-view: false  
-    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: none 
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL55Dialect  
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:   
+    url: jdbc:mysql://localhost:3306/cep
+    username: usr-api
+    password: test-cep  
     hikari:
       minimum-idle: ${minimum-idle:5}
       idle-timeout: ${idle-timeout:10000}
-      connectionTimeout: ${idle-timeout:10000}
+      connectionTimeout: ${idle-timeout:10000}  
   
 security:
   jwt:
@@ -27,6 +30,13 @@ security:
     prefix: ${JWT_PREFIX:Bearer}
     secret: ${JWT_SECRET:10E9F239E3523081B76C3B71E26BF1C29D8D6E5DC11583A0BBA534BF8CBC338A}
       
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health.show-details: always
+            
 info:
   app:
     encoding: '@project.build.sourceEncoding@'
@@ -38,3 +48,5 @@ info:
     name: '@project.name@'
     description: '@project.description@'
     version: '@project.version@'  
+    
+    

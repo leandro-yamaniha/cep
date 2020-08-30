@@ -17,7 +17,7 @@ public interface CepAddressRepository extends JpaRepository<CepAddress, String> 
 			nativeQuery = false)
 	Set<CepAddress> getAll(Set<String> ids);
 
-	@Query(value = "select c.* from Cep_Address c where c.cep in (:ids) order by c.cep desc limit 1", 
+	@Query(value = "select c.* from cep_address c where c.cep in (:ids) order by c.cep desc limit 1", 
 			nativeQuery = true)
 	Optional<CepAddress> getFirstSimilar(@Param("ids") Set<String> ids);
 
