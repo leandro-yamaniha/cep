@@ -3,6 +3,7 @@ package com.yamaniha.cep.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.yamaniha.cep.dto.CepDto;
@@ -20,6 +21,7 @@ public class CepServiceImpl implements CepService {
 		this.repository = repository;
 	}
 	
+	@Cacheable(value="findCep")
 	@Override
 	public CepDto findCep(final String id) {
 
