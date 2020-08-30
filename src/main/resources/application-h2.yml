@@ -1,0 +1,49 @@
+server:
+  port: 9000
+  servlet:
+    contextPath: /cep/ 
+spring:
+  application:
+    name: Cep-Api  
+  profiles:
+    active: h2    
+  h2.console.enabled: true
+  jpa:
+    open-in-view: false  
+    hibernate:
+      ddl-auto: create-drop 
+    database-platform: org.hibernate.dialect.H2Dialect
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:   
+    hikari:
+      minimum-idle: ${minimum-idle:5}
+      idle-timeout: ${idle-timeout:10000}
+      connectionTimeout: ${idle-timeout:10000}
+  
+security:
+  jwt:
+    header: ${JWT_HEADER:Authorization}
+    prefix: ${JWT_PREFIX:Bearer}
+    secret: ${JWT_SECRET:10E9F239E3523081B76C3B71E26BF1C29D8D6E5DC11583A0BBA534BF8CBC338A}
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health.show-details: always    
+      
+info:
+  app:
+    encoding: '@project.build.sourceEncoding@'
+  java:
+    source: '@java.version@'
+    target: '@java.version@'
+  build:
+    artifact: '@project.artifactId@'
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'  

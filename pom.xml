@@ -18,6 +18,12 @@
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
 		<jacoco.version>0.8.4</jacoco.version>
+		<checkstyle-maven-plugin.version>3.1.1</checkstyle-maven-plugin.version>
+		<sonar.coverage.exclusions>
+			**/*CepApplication.*,
+			**/utils/**,
+			**/filter/**
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -34,9 +40,22 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>	
+		<dependency>
+	        <groupId>com.github.ben-manes.caffeine</groupId>
+	        <artifactId>caffeine</artifactId>
+	    </dependency>
+	    
+	    
+	    <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>			
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<artifactId>h2</artifactId>			
 		</dependency>		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -72,6 +91,11 @@
 		  <version>0.9.0</version>
 		</dependency>
 		<dependency>
+		  <groupId>commons-io</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>2.5</version>
+	  	</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
@@ -92,9 +116,29 @@
 			<scope>test</scope>
 		</dependency>		
 		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit</artifactId>
+			<version>0.14.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency> 
+		    <groupId>net.logstash.logback</groupId> 
+		    <artifactId>logstash-logback-encoder</artifactId> 
+		    <version>4.11</version> 
+		</dependency>
+		
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>		
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
 	</dependencies>
 
 	<dependencyManagement>
@@ -123,6 +167,8 @@
 					<mainclass>com.yamaniha.CepApplication</mainclass>		
 					<excludes>
 						<exclude>**/*CepApplication.*</exclude>
+						<exclude>**/util/**</exclude>
+						<exclude>**/filter/**</exclude>
 					</excludes>
 					
 				</configuration>
@@ -163,7 +209,40 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-maven-plugin.version}</version>
+				<configuration>
+					<failOnViolation>true</failOnViolation>
+					<violationSeverity>warning</violationSeverity>
+					<logViolationsToConsole>true</logViolationsToConsole>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-maven-plugin.version}</version>
+				<configuration>
+					<violationSeverity>warning</violationSeverity>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	
 </project>
