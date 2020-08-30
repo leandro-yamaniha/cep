@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties= {"security.jwt.prefix=Bearer","security.jwt.secret=test"})
+@TestPropertySource(locations ="/application-test.properties")
 @DisplayName("testando autenticação do token .. ")
 class AuthenticationControllerTest {
 	
