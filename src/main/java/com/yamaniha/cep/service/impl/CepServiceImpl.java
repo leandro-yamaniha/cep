@@ -21,7 +21,7 @@ public class CepServiceImpl implements CepService {
 		this.repository = repository;
 	}
 	
-	@Cacheable(value="findCep")
+	@Cacheable(value = "findCep")
 	@Override
 	public CepDto findCep(final String id) {
 
