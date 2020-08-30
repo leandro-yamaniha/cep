@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@DisplayName("testing app")
+@DisplayName("testando app ...")
 class CepApplicationTests {
 
 	@Test
-	@DisplayName("test initialization")
+	@DisplayName("test inicialização ...")
 	void contextLoads() {
 		
 	}

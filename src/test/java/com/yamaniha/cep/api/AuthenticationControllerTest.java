@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -19,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties= {"security.jwt.prefix=Bearer","security.jwt.secret=test"})
-@DisplayName("testing token authentication.. ")
+@DisplayName("testando autenticação do token .. ")
 class AuthenticationControllerTest {
 	
 	private final static String ENDPOINT_GET = CepController.BASE_ENDPOINT
@@ -43,7 +42,7 @@ class AuthenticationControllerTest {
     }
 	
 	@Test
-	@DisplayName("unauthorized access without header")
+	@DisplayName("acesso não autorizado pois está sem header de autenticação")
 	void isUnauthorized() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON))				
@@ -52,7 +51,7 @@ class AuthenticationControllerTest {
 	}
 	
 	 @Test
-	 @DisplayName("unauthorized access when invalid header")
+	 @DisplayName("acesso não autorizado pois está header inválido")
 	 void invalidHeader() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +62,7 @@ class AuthenticationControllerTest {
 	
 	 
 	 @Test
-	 @DisplayName("unauthorized access when invalid token")
+	 @DisplayName("acesso não autorizado quando token é inválido")
 	 void invalidToken() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -74,7 +73,7 @@ class AuthenticationControllerTest {
 	 
 	 @WithMockUser("admin")
 	 @Test
-	 @DisplayName("unauthorized access when invalid username")
+	 @DisplayName("acesso não autorizado quando usuário invalido")
 	 void invalidUsername() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +84,7 @@ class AuthenticationControllerTest {
 	
 	 @WithMockUser("admin")
 	 @Test
-	 @DisplayName("authorized access")
+	 @DisplayName("acesso autorizado")
 	 void isOk() throws Exception {
 		 mockMvc.perform(get(ENDPOINT_GET)
 					.contentType(MediaType.APPLICATION_JSON)

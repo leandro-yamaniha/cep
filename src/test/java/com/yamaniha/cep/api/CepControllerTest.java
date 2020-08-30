@@ -29,7 +29,7 @@ import com.yamaniha.cep.exception.CepNotFoundException;
 import com.yamaniha.cep.service.CepService;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("testing CepController with mockito ...")
+@DisplayName("testando CepController com mockito ...")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CepControllerTest {
 
@@ -53,7 +53,7 @@ class CepControllerTest {
 	
 	@Test()
 	@Order(0)
-	@DisplayName("checking the startup of mocks instances")
+	@DisplayName("checando a inicialização das instancias mockadas ...")
 	void initializationCheck(){
 		
 		Assertions.assertNotNull(mockMvc);
@@ -64,7 +64,7 @@ class CepControllerTest {
 		
 	@Test()
 	@Order(2)
-	@DisplayName("call endpoint expect ok")
+	@DisplayName("chamando endpoind quando é esperado o http status 200 ...")
 	void ok() throws Exception {
 		
 		String id = "14403500";
@@ -91,7 +91,7 @@ class CepControllerTest {
 
 	@Test()
 	@Order(3)
-	@DisplayName("call endpoint expect not found")
+	@DisplayName("chamando endpoint quando é esperado o http status 404")
 	void notFound() throws Exception {
 		
 		String id = "12345678";
@@ -115,7 +115,7 @@ class CepControllerTest {
 	
 	@Test()
 	@Order(4)
-	@DisplayName("call endpoint expect internal server error")
+	@DisplayName("chamando endpoint quando é esperado http status 500")
 	void internalServerError() throws Exception {
 		
 		String id = "14403500";

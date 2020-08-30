@@ -14,11 +14,11 @@ import com.yamaniha.cep.security.JwtTokenAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
+public class SecurityTokenConfiguration extends WebSecurityConfigurerAdapter {
 		
 	private JwtProperties jwtConfig;
 	
-	SecurityTokenConfig(final JwtProperties jwtConfig) {
+	SecurityTokenConfiguration(final JwtProperties jwtConfig) {
 		this.jwtConfig = jwtConfig;
 	}
 

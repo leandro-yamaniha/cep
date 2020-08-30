@@ -1,25 +1,23 @@
 package com.yamaniha.cep.service;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.yamaniha.cep.exception.CepNotFoundException;
 import com.yamaniha.cep.service.impl.CepServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("testing CepService")
+@DisplayName("testando CepService")
 public class CepServiceTest {
 
 	@InjectMocks
 	private CepServiceImpl service;
 	
 	@Test
-	@DisplayName("identical cep found")
-	void identicalCodeFound() {
+	@DisplayName("quando o cep identico for encontrado")
+	void whenCepIsFound() {
 		
 		String id = "14403500";
 		var result =service.findCep(id);
@@ -28,8 +26,8 @@ public class CepServiceTest {
 	}
 	
 	@Test
-	@DisplayName("similar cep found")
-	void similarCodeFound() {
+	@DisplayName("quando encontrado o cep sugerido")
+	void whenSimilarCepIsFound() {
 		
 //		String id = "14403500";
 //		var result =service.findCep(id);
@@ -39,8 +37,8 @@ public class CepServiceTest {
 	}
 	
 	@Test
-	@DisplayName("cep not found")
-	void notFound() {
+	@DisplayName("quando o cep não for encontrado")
+	void whenCepIsNotFound() {
 		
 //		Assertions.assertThrows(CepNotFoundException.class, 
 //				()->service.findCep("x"));

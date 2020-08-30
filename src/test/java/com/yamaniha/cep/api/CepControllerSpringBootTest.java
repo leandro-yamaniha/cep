@@ -12,11 +12,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,7 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.yamaniha.cep.api.advice.ApiControllerAdvice;
 import com.yamaniha.cep.integration.annotation.IntegrationTest;
 
-@DisplayName("testing CepController with spring ...")
+@DisplayName("testando CepController com contexto do spring ...")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @IntegrationTest
 class CepControllerSpringBootTest {
@@ -49,7 +46,7 @@ class CepControllerSpringBootTest {
 	
 	@Test()
 	@Order(0)
-	@DisplayName("checking the startup of mocks instances")
+	@DisplayName("verificando as inicialização das instancias ...")
 	void initializationCheck(){
 		
 		Assertions.assertNotNull(mockMvc);		
@@ -59,7 +56,7 @@ class CepControllerSpringBootTest {
 	
 	
 	@ParameterizedTest
-	@DisplayName("call endpoint invalid id")
+	@DisplayName("chamando endpoint com id inválido ...")
 	@ValueSource(strings= {"1","12","123","1234","12345","123456","1234567"})
 	void idInvalid(String id) throws Exception {
 		

@@ -9,10 +9,11 @@ import com.tngtech.archunit.core.domain.JavaClasses;
 import com.yamaniha.cep.archtest.annotation.ArchTest;
 
 @ArchTest
+@DisplayName("padrão de código fonte quando é exception")
 class ArchExceptionTest {
 	
     @Test
-    @DisplayName("verifing classes in package exception ending Exception ...")
+    @DisplayName("verificando classes no pacote exception terminadas com exception ...")
     void shouldHaveSimpleNameEndingWithException(final JavaClasses classes) {
         classes()
                 .that().resideInAPackage("..exception..")

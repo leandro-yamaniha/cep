@@ -1,18 +1,21 @@
 package com.yamaniha.cep.archtest;
 
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.yamaniha.cep.archtest.annotation.ArchTest;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.yamaniha.cep.archtest.annotation.ArchTest;
 
 @ArchTest
+@DisplayName("padrão de código fonte, properties")
 class ArchPropertiesTest {
 
     @Test
+    @DisplayName("deve ter o nome terminado com properties")
     void shouldHaveSimpleNameEndingWithProperties(final JavaClasses classes) {
         classes()
                 .that().resideInAPackage("..properties..")
@@ -22,6 +25,7 @@ class ArchPropertiesTest {
     }
 
     @Test
+    @DisplayName("deve ter a annotation ConstructorBinding")
     void shouldBeAnnotatedWithConstructorBinding(final JavaClasses classes) {
         classes()
                 .that().resideInAPackage("..properties..")
@@ -31,6 +35,7 @@ class ArchPropertiesTest {
     }
 
     @Test
+    @DisplayName("deve ser a annotation ConfigurationProperties")
     void shouldBeAnnotatedWithConfigurationProperties(final JavaClasses classes) {
         classes()
                 .that().resideInAPackage("..properties..")
