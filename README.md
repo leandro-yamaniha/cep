@@ -19,12 +19,12 @@ Neste projeto foi escolhido utilizar a linguagem Java com o framework Spring Boo
 
 O acesso ao banco de dados foi escolhido o uso do Spring Data JPA por simplificar, acelerar o desenvolvimento e considerando com um microserviço REST que pode evoluir, as construção de novas implementações de verbos tais como POST, PUT, DELETE, por exemplo, ficam muito fáceis, pois nesta implementação já foi criada a infraestrutura de modelo e repositório que para inclusão destes verbos ou outras funcionalidades já aproveita parte do que foi implementado.
 
-Além disso, foi considerado para efeito de oportunidade de melhora de performance o uso de cache, foi abstraido neste desenvolvimento que os serviços que consumem o cep, em muitos momentos podem consultar ceps repetidos, desta forma minimizamos o custo de acesso ao banco de dados.
+Além disso, foi considerado para efeito de oportunidade e melhora de performance o uso de cache, foi abstraido neste desenvolvimento que os serviços que consumem o cep, em muitos momentos podem consultar ceps repetidos, desta forma minimizamos o custo de acesso ao banco de dados.
 
 No fluxograma também foi considerado caso cep informado não seja encontrado, para melhor uso de processamento do banco de dados vs multiplos acessos ao banco, foi considerado que na sugestão de cep, já gerasse uma lista de possiveis cep  sugeridos, para fazer apenas uma busca no banco de dados baseado na lista e pegasse o primeiro registro baseado na query ordenado de forma decrescente. Desta forma se evita muitas consultas ao banco para verificar cada item da lista de sugestão existe ou não no banco de dados.
 
 Para auxiliar o monitoramento da aplicação foi feito o uso das seguintes ferramentas:
-- Spring Boot Admin Server, responsável para mostrar as metricas da aplicação , de uso de memória, processamento, número de thread, saude da aplicação.
+- Spring Boot Admin Server, responsável para mostrar as metricas da aplicação , de uso de memória, processamento, número de threads, saúde da aplicação.
 - LogStash, ElasticSearch e Kibana - para processar e monitorar os logs
 - MySQL - banco de dados para armazenar e consultar os dados
 - Cep Api - o próprio microserviço

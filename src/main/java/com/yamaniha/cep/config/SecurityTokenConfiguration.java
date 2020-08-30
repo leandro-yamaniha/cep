@@ -32,7 +32,7 @@ public class SecurityTokenConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests().antMatchers(
 					"/swagger-resources/**", "/v2/api-docs/**", "/csrf/**",
 					"/webjars/**", "/swagger-ui.html", "/h2-console/**", 
-					"/actuator/health", "/actuator/info")
+					"/actuator/**")
 			.permitAll().anyRequest().authenticated();
 		
 		http.headers().frameOptions().disable();
