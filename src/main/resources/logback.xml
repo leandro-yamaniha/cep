@@ -18,16 +18,25 @@
 		</encoder>
 	</appender>
 	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">         
+         <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-4level [,%X{traceId}, %X{spanId},%X{spanExportable}] [%-15t] %logger{36} : %msg %X{http.method} %X{http.path} %X{http.status} %n</Pattern>
+      </encoder>
+    </appender>
+    
 	<logger name="org.hibernate.SQL" level="DEBUG" additivity="false">	    
 	    <appender-ref ref="burzum" />
+	    <appender-ref ref="STDOUT" />
 	</logger>
 	
  	<logger name="org.springframework.cache" level="TRACE" additivity="false">		
 	    <appender-ref ref="burzum" />
+	    <appender-ref ref="STDOUT" />
 	</logger>
 	
  	<root level="INFO" additivity="false" >
 		<appender-ref ref="burzum" />
+		<appender-ref ref="STDOUT" />
 	</root> 
 		
 </configuration>
